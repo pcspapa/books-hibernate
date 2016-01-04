@@ -28,6 +28,7 @@
         <!-- SQL -->
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
+        <property name="use_sql_comments">true</property>
 
         <!-- XML Mapping file list -->
         <mapping resource="com/cspark/books/hibernate/hello/Message.hbm.xml"/>
