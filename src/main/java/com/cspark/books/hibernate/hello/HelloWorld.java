@@ -13,6 +13,7 @@ public class HelloWorld {
 
     public static void main(String[] args) {
 
+        // 첫 번째 작업 단위
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
@@ -22,6 +23,7 @@ public class HelloWorld {
         tx.commit();
         session.close();
 
+        // 두 번째 작업 단위
         Session newSession = HibernateUtil.getSessionFactory().openSession();
         Transaction newTx = newSession.beginTransaction();
 
@@ -32,6 +34,19 @@ public class HelloWorld {
         for (Message loadedMsg : messages) {
             System.out.println(loadedMsg.getText());
         }
+
+        // 세 번째 작업 단위 : 변경 감지(dirty checking), 연쇄 작용(cascading)
+        Session thirdSession = HibernateUtil.getSessionFactory().openSession();
+        Transaction thirdTx = thirdSession.beginTransaction();
+
+        message = thirdSession.get(Message.class, msgId);
+
+        message.setText("Greetings Earthling");
+        message.setNextMessage(new Message("Take me to your leader (please)"));
+
+        thirdTx.commit();
+        thirdSession.close();
+
 
         newTx.commit();
         newSession.close();
