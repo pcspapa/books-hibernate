@@ -11,11 +11,22 @@ public class HibernateUtil {
 
     static {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex){
+            sessionFactory = new Configuration()
+                    .configure()
+                    .buildSessionFactory();
+        } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
+
+    /*
+    static {
+        sessionFactory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addResource("com/cspark/books/hibernate/hello/Message.hbm.xml")
+                .buildSessionFactory();
+    }
+    */
 
 
     public static SessionFactory getSessionFactory() {
