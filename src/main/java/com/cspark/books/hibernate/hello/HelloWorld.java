@@ -1,9 +1,9 @@
 package com.cspark.books.hibernate.hello;
 
-import com.cspark.books.hibernate.persistence.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
 
 /**
@@ -13,21 +13,25 @@ public class HelloWorld {
 
     public static void main(String[] args) {
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("helloworld");
+
         // 첫 번째 작업 단위
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
 
         Message message = new Message("Hello World");
-        Long msgId = (Long) session.save(message);
+        em.persist(message);
 
         tx.commit();
-        session.close();
+        em.close();
 
         // 두 번째 작업 단위
-        Session newSession = HibernateUtil.getSessionFactory().openSession();
-        Transaction newTx = newSession.beginTransaction();
+        EntityManager newEm = emf.createEntityManager();
+        EntityTransaction newTx = newEm.getTransaction();
+        newTx.begin();
 
-        List<Message> messages = newSession.createQuery("from Message m order by m.text asc").list();
+        List<Message> messages = newEm.createQuery("select m from Message m order by m.text asc").getResultList();
 
         System.out.println(messages.size() + "message(s) found");
 
@@ -35,23 +39,12 @@ public class HelloWorld {
             System.out.println(loadedMsg.getText());
         }
 
-        // 세 번째 작업 단위 : 변경 감지(dirty checking), 연쇄 작용(cascading)
-        Session thirdSession = HibernateUtil.getSessionFactory().openSession();
-        Transaction thirdTx = thirdSession.beginTransaction();
-
-        message = thirdSession.get(Message.class, msgId);
-
-        message.setText("Greetings Earthling");
-        message.setNextMessage(new Message("Take me to your leader (please)"));
-
-        thirdTx.commit();
-        thirdSession.close();
-
-
         newTx.commit();
-        newSession.close();
+        newEm.close();
 
-        HibernateUtil.shutdown();
+        // 애플리케이션 종료
+        emf.close();
+
     }
 
 }
