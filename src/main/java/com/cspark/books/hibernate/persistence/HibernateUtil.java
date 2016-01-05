@@ -21,9 +21,9 @@ public class HibernateUtil {
 
     /*
     static {
-        sessionFactory = new Configuration()
+        sessionFactory = new AnnotationConfiguration()
                 .configure("hibernate.cfg.xml")
-                .addResource("com/cspark/books/hibernate/hello/Message.hbm.xml")
+                .addAnnotationClass(Message.class)
                 .buildSessionFactory();
     }
     */

@@ -1,14 +1,24 @@
 package com.cspark.books.hibernate.hello;
 
+import javax.persistence.*;
+
 /**
  * Created by cspark on 2016. 1. 4..
  */
+@Entity
+@Table(name = "MESSAGE")
 public class Message {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "MESSAGE_ID")
     private Long id;
 
+    @Column(name = "MESSAGE_TEXT")
     private String text;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "NEXT_MESSAGE_ID")
     private Message nextMessage;
 
     public Message() {
