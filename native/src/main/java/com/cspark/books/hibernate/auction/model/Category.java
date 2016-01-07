@@ -8,6 +8,8 @@ import java.util.Set;
  */
 public class Category {
 
+    private Long id;
+
     private String name;
 
     private Category parentCategory;
@@ -17,6 +19,10 @@ public class Category {
     private Set<Item> items = new HashSet();
 
     public Category() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
