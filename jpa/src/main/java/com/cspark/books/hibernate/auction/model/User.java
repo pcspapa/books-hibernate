@@ -1,12 +1,13 @@
 package com.cspark.books.hibernate.auction.model;
 
-import java.io.Serializable;
-import java.util.StringTokenizer;
+import javax.persistence.*;
 
 /**
- * Created by cspark on 2016. 1. 6..
+ * Created by cspark on 2016. 1. 7..
  */
-public class User implements Serializable {
+@Entity
+@Table(name = "USER")
+public class User {
 
     private Long id;
 
@@ -16,8 +17,20 @@ public class User implements Serializable {
 
     private String username;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "HOME_ZIPCODE")),
+            @AttributeOverride(name = "city", column = @Column(name = "HOME_CITY"))
+    })
     private Address homeAddress;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "BILLING_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "BILLING_ZIPCODE")),
+            @AttributeOverride(name = "city", column = @Column(name = "BILLING_CITY"))
+    })
     private Address billingAddress;
 
     public Long getId() {
@@ -59,4 +72,5 @@ public class User implements Serializable {
     public void setBillingAddress(Address billingAddress) {
         this.billingAddress = billingAddress;
     }
+
 }

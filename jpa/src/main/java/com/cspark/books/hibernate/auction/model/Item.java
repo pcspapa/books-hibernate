@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by cspark on 2016. 1. 6..
+ * Created by cspark on 2016. 1. 7..
  */
 public class Item {
 
