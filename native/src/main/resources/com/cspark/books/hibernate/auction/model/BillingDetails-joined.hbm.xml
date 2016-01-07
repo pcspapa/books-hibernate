@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.cspark.books.hibernate.auction.model.BillingDeatils"
+           table="BILLING_DETAILS">
+
+        <id name="id"
+            column="BILLING_DETAILS_ID"
+            type="long">
+            <generator class="native"/>
+        </id>
+
+        <property name="owner"
+                  column="OWNER"
+                  type="string"
+                  not-null="true"/>
+
+        <joined-subclass name="com.cspark.books.hibernate.auction.model.CreditCard"
+                        table="CREDIT_CARD">
+
+            <key column="CREDIT_CARD_ID"/>
+
+            <property name="number"
+                      column="NUMBER"
+                      type="string"
+                      not-null="true"/>
+
+            <property name="expMonth"
+                      column="EXP_MONTH"
+                      type="string"
+                      not-null="true"/>
+
+            <property name="expYear"
+                      column="EXP_YEAR"
+                      type="string"
+                      not-null="true"/>
+
+        </joined-subclass>
+
+        <joined-subclass name="com.cspark.books.hibernate.auction.model.BankAccount"
+                        table="BANK_ACCOUNT">
+
+            <key column="BANK_ACCOUNT_ID"/>
+
+            <property name="account"
+                      column="ACCOUNT"
+                      type="string"
+                      not-null="true"/>
+
+            <property name="bankname"
+                      column="BANKNAME"
+                      type="string"
+                      not-null="true"/>
+
+            <property name="swift"
+                      column="SWIFT"
+                      type="string"
+                      not-null="true"/>
+
+        </joined-subclass>
+
+    </class>
+</hibernate-mapping>

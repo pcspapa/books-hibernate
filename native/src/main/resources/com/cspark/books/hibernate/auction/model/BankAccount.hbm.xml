@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.cspark.books.hibernate.auction.model.BankAccount"
+           table="BANK_ACCOUNT">
+
+        <id name="id"
+            column="USER_ID"
+            type="long">
+            <generator class="native"/>
+        </id>
+
+        <property name="owner"
+                  column="OWNER"
+                  type="string"
+                  not-null="true"/>
+
+        <property name="account"
+                  column="ACCOUNT"
+                  type="string"
+                  not-null="true"/>
+
+        <property name="bankname"
+                  column="BANKNAME"
+                  type="string"
+                  not-null="true"/>
+
+        <property name="swift"
+                  column="SWIFT"
+                  type="string"
+                  not-null="true"/>
+
+    </class>
+</hibernate-mapping>
